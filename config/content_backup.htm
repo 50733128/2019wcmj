@@ -1,10 +1,160 @@
-<h1>讚</h1>
-<p><img alt="" height="457" src="/images/20150801000091M.jpg" width="445"/></p><h1>簡介</h1>
-<p>首先是這個衝突 (這是新版本內容)</p>
-<p>終於要來處理衝突了 (這是產生衝突的舊版本內容)</p>
-<p>CMSimfly (<a href="https://github.com/chiamingyen/cmsimfly">https://github.com/chiamingyen/cmsimfly)</a> 是一套簡單的網際內容管理系統, 採用 Flask 網際框架, 以 Beautifulsoup 解讀分頁內容.</p>
-<p><img alt="" height="143" src="/images/gocycle4.png" width="178"/></p>
-<p><img alt="" height="386" src="/images/擷取.PNG" width="555"/></p><h1>Game2</h1>
+<h1>簡介</h1>
+<p></p>
+<p><iframe height="900" src="/static/viewstl.html?src=/downloads/歡迎.stl" width="900"><iframe></iframe></iframe></p>
+<h1>game1</h1>
+<script type="text/javascript">
+var cwidth = 400;
+    var cheight = 300;
+    var dicex = 50;
+    var dicey = 50;
+    var dicewidth = 100;
+    var diceheight = 100;
+    var dotrad = 6;
+    var ctx;
+    var dx;
+    var dy;
+    var firstturn = true;
+    var point;
+function throwdice() {
+    var sum;
+    var ch = 1+Math.floor(Math.random()*6);
+    sum = ch;
+    dx = dicex;
+    dy = dicey;
+    drawface(ch);
+    dx = dicex + 150;
+    ch=1 + Math.floor(Math.random()*6);
+    sum += ch;
+    drawface(ch);
+    if (firstturn) {
+        switch(sum) {
+            case 7:
+            case 11:
+              document.f.outcome.value="You win!";
+              break;
+            case 2:
+            case 3:
+            case 12:
+              document.f.outcome.value="You lose!";
+              break;
+            default:
+              point = sum;
+              document.f.pv.value=point;
+              firstturn = false;
+              document.f.stage.value="Need follow-up throw.";
+              document.f.outcome.value="   ";
+        }
+    }
+    else {
+        switch(sum) {
+        case point:
+           document.f.outcome.value="You win!";
+           document.f.stage.value="Back to first throw.";
+           document.f.pv.value=" ";
+           firstturn = true;
+           break;
+        case 7:
+           document.f.outcome.value="You lose!";
+           document.f.stage.value="Back to first throw.";
+           document.f.pv.value=" ";
+           firstturn = true;
+        }
+            }
+}
+function drawface(n) {
+  ctx = document.getElementById('canvas').getContext('2d');  
+  ctx.lineWidth = 5;
+  ctx.clearRect(dx,dy,dicewidth,diceheight);
+  ctx.strokeRect(dx,dy,dicewidth,diceheight)
+  var dotx;
+  var doty;
+  ctx.fillStyle = "#009966";
+    switch(n) {
+        case 1:
+         draw1();
+         break;
+        case 2:
+         draw2();
+         break;
+        case 3:
+         draw2();
+         draw1();
+         break;
+        case 4:
+         draw4();
+         break;
+        case 5:
+         draw4();
+         draw1();
+         break;
+        case 6:
+         draw4();
+         draw2mid();
+         break;
+           
+    }
+}
+function draw1() {
+    var dotx;
+    var doty;
+    ctx.beginPath();
+    dotx = dx + .5*dicewidth;
+    doty = dy + .5*diceheight;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    ctx.closePath();
+    ctx.fill();
+}
+function draw2() {
+    var dotx;
+    var doty;
+    ctx.beginPath();
+    dotx = dx + 3*dotrad;
+    doty = dy + 3*dotrad;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    dotx = dx+dicewidth-3*dotrad;
+    doty = dy+diceheight-3*dotrad;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    ctx.closePath();
+    ctx.fill();
+}
+function draw4() {
+    var dotx;
+    var doty;
+    ctx.beginPath();
+    dotx = dx + 3*dotrad;
+    doty = dy + 3*dotrad;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    dotx = dx+dicewidth-3*dotrad;
+    doty = dy+diceheight-3*dotrad;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    dotx = dx + 3*dotrad;
+    doty = dy + diceheight-3*dotrad;  //no change
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    dotx = dx+dicewidth-3*dotrad;
+    doty = dy+ 3*dotrad;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    ctx.closePath();
+    ctx.fill(); 
+}
+function draw2mid() {
+    var dotx;
+    var doty;
+    ctx.beginPath();
+    dotx = dx + 3*dotrad;
+    doty = dy + .5*diceheight;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    dotx = dx+dicewidth-3*dotrad;
+    doty = dy + .5*diceheight; //no change
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    ctx.closePath();
+    ctx.fill();
+}
+</script>
+<p><canvas height="300" id="canvas" width="400"> Your browser doesn't support the HTML5 element canvas. </canvas> <br/> <button onclick="throwdice();">Throw dice </button></p>
+<form id="f" name="f">Stage: <input name="stage" type="text" value="First Throw"/> Point: <input name="pv" type="text" value="   "/> Outcome: <input name="outcome" type="text" value="     "/></form><h1>Game2</h1>
 <p>網路與電腦程式只是工具, 任何人希望與遠端的系統或成員溝通, 可以使用網路.</p>
 <p>任何人想要利用電腦的能力解決問題, 就必須學會編寫電腦程式, 與電腦溝通.</p>
 <p><button onclick="myFunction()">Try it</button></p>
@@ -106,7 +256,11 @@ Host github.com_user2
 <div>各式 Template 導入 CMSimfly, 讓未來的使用者可以根據不同環境需求, 選擇不同的靜態網頁模板.</div>
 <p><span>至於內容的強化則可根據</span><a href="http://mde.tw/wcm2019/content/%E5%AF%A6%E7%BF%92%E9%A0%85%E7%9B%AE%E4%B8%89.html">實習任務三</a><span>的引導, 將更多設想中的動態 Javascript 模擬或遊戲內容, 放入各組的 CMSimfly 網站中.</span><br/><br/><strong><span>深入了解網際內容管理系統的配置環境</span></strong></p>
 <div></div>
-<div>此類期末報告的任務, 在利用 Virtualbox 中的 Ubuntu 操作系統, 配置一套可以動態啟動的虛擬網際內容管理系統, 並學習如何在虛擬操作系統與實體操作系統中配置 CMSimfly 網際內容管理系統. 相關規劃可以參考: <a href="https://2019wcm.blogspot.com/2019/04/virtualbox.html">https://2019wcm.blogspot.com/2019/04/virtualbox.html</a></div><h1>期中影片</h1>
+<div>此類期末報告的任務, 在利用 Virtualbox 中的 Ubuntu 操作系統, 配置一套可以動態啟動的虛擬網際內容管理系統, 並學習如何在虛擬操作系統與實體操作系統中配置 CMSimfly 網際內容管理系統. 相關規劃可以參考: <a href="https://2019wcm.blogspot.com/2019/04/virtualbox.html">https://2019wcm.blogspot.com/2019/04/virtualbox.html</a></div>
+<div>
+<h2>網際內容管理課程回顧</h2>
+<p><span>2019 Spring 網際內容管理課程</span><br/><br/><strong><span>五專部</span></strong><br/><br/><strong><span>1. 是否已經在自己的隨身碟建立隨身程式系統?</span></strong><br/><br/><span>此一隨身系統以</span><a href="https://drive.google.com/open?id=1_TQBw1PM7jxrmtsBjvLKbjJWfGs8Ug79"><span> </span>2019_cdb_w5.7z</a><span><span> </span>為基礎, 使用者必須會自行查驗</span><br/><br/><span>    是否已經將 portablegit 中的 helper = manager 的設定移除?</span><br/><span>     python 是否已經安裝 flask, bs4 與 lxml 模組?</span><br/><span>    (1)是否了解 git 以 https 連線時, proxy 將採用那一個檔案中的設定?</span><br/><span>    (2)是否已經學會如何採用 ssh 模式維護 github 上的倉儲?</span><br/><span>    (3)是否了解 CMSimfly 動態與靜態系統之間的關係?</span><br/><span>    (4)是否會在 CMSimfly 中上傳檔案, 引用檔案?</span><br/><span>    (5)是否會在 CMsimfly 中上傳圖檔, 引用圖檔?</span><br/><span>    (6)是否會在 CMSimfly 中嵌入 Youtube 影片?</span><br/><span>    (7)是否會在 CMSimfly 頁面中加入 Javascript 互動程式?</span><br/><span>    (8)是否會更改 CMsimfly 靜態系統所使用的模板?</span><br/><span>    (9)是否能將 USB 隨身碟格式為 NTFS 或 extFAT, 以便放入 Ubuntu 虛擬主機檔案?</span><br/><span>    (10)是否會使用自己隨身碟中的 Virtualbox 與 Ubuntu 中的 Fossil SCM 來伺服靜態 CMSimfly 檔案?</span><br/><span>    (11)是否會使用自己隨身碟中的 Virtualbox 與 Ubuntu 中的 uwsgi 來伺服動態 CMSimfly 系統?</span><br/><br/><strong><span>2. 是否已經根據各上述階段任務的操作拍成說明影片, 嵌入自己的 Github Pages 網站?</span></strong><br/><br/><strong><span>3. 是否已經著手執行各學員的期末專案, 是否了解各學員的期末報告, 必須同時呈現 html 與 pdf 版本.</span></strong><br/><br/><span>各學員繳交供評分之內容: 個人倉儲 Github Pages 網站及 pdf 格式之期末報告.</span></p>
+</div><h1>期中影片</h1>
 <p><iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="693" src="https://www.youtube.com/embed/YDW8GWyeIu0" width="1280"></iframe></p><h1>ROC Flag</h1>
 <!-- 導入 Brython 標準程式庫 -->
 <script src="/static/brython.js"></script>

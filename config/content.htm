@@ -1,10 +1,160 @@
-<h1>讚</h1>
-<p><img alt="" height="457" src="/images/20150801000091M.jpg" width="445"/></p><h1>簡介</h1>
-<p>首先是這個衝突 (這是新版本內容)</p>
-<p>終於要來處理衝突了 (這是產生衝突的舊版本內容)</p>
-<p>CMSimfly (<a href="https://github.com/chiamingyen/cmsimfly">https://github.com/chiamingyen/cmsimfly)</a> 是一套簡單的網際內容管理系統, 採用 Flask 網際框架, 以 Beautifulsoup 解讀分頁內容.</p>
-<p><img alt="" height="143" src="/images/gocycle4.png" width="178"/></p>
-<p><img alt="" height="386" src="/images/擷取.PNG" width="555"/></p><h1>Game2</h1>
+<h1>簡介</h1>
+<p></p>
+<p><iframe height="900" src="/static/viewstl.html?src=/downloads/歡迎.stl" width="900"><iframe></iframe></iframe></p>
+<h1>game1</h1>
+<script type="text/javascript">
+var cwidth = 400;
+    var cheight = 300;
+    var dicex = 50;
+    var dicey = 50;
+    var dicewidth = 100;
+    var diceheight = 100;
+    var dotrad = 6;
+    var ctx;
+    var dx;
+    var dy;
+    var firstturn = true;
+    var point;
+function throwdice() {
+    var sum;
+    var ch = 1+Math.floor(Math.random()*6);
+    sum = ch;
+    dx = dicex;
+    dy = dicey;
+    drawface(ch);
+    dx = dicex + 150;
+    ch=1 + Math.floor(Math.random()*6);
+    sum += ch;
+    drawface(ch);
+    if (firstturn) {
+        switch(sum) {
+            case 7:
+            case 11:
+              document.f.outcome.value="You win!";
+              break;
+            case 2:
+            case 3:
+            case 12:
+              document.f.outcome.value="You lose!";
+              break;
+            default:
+              point = sum;
+              document.f.pv.value=point;
+              firstturn = false;
+              document.f.stage.value="Need follow-up throw.";
+              document.f.outcome.value="   ";
+        }
+    }
+    else {
+        switch(sum) {
+        case point:
+           document.f.outcome.value="You win!";
+           document.f.stage.value="Back to first throw.";
+           document.f.pv.value=" ";
+           firstturn = true;
+           break;
+        case 7:
+           document.f.outcome.value="You lose!";
+           document.f.stage.value="Back to first throw.";
+           document.f.pv.value=" ";
+           firstturn = true;
+        }
+            }
+}
+function drawface(n) {
+  ctx = document.getElementById('canvas').getContext('2d');  
+  ctx.lineWidth = 5;
+  ctx.clearRect(dx,dy,dicewidth,diceheight);
+  ctx.strokeRect(dx,dy,dicewidth,diceheight)
+  var dotx;
+  var doty;
+  ctx.fillStyle = "#009966";
+    switch(n) {
+        case 1:
+         draw1();
+         break;
+        case 2:
+         draw2();
+         break;
+        case 3:
+         draw2();
+         draw1();
+         break;
+        case 4:
+         draw4();
+         break;
+        case 5:
+         draw4();
+         draw1();
+         break;
+        case 6:
+         draw4();
+         draw2mid();
+         break;
+           
+    }
+}
+function draw1() {
+    var dotx;
+    var doty;
+    ctx.beginPath();
+    dotx = dx + .5*dicewidth;
+    doty = dy + .5*diceheight;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    ctx.closePath();
+    ctx.fill();
+}
+function draw2() {
+    var dotx;
+    var doty;
+    ctx.beginPath();
+    dotx = dx + 3*dotrad;
+    doty = dy + 3*dotrad;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    dotx = dx+dicewidth-3*dotrad;
+    doty = dy+diceheight-3*dotrad;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    ctx.closePath();
+    ctx.fill();
+}
+function draw4() {
+    var dotx;
+    var doty;
+    ctx.beginPath();
+    dotx = dx + 3*dotrad;
+    doty = dy + 3*dotrad;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    dotx = dx+dicewidth-3*dotrad;
+    doty = dy+diceheight-3*dotrad;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    dotx = dx + 3*dotrad;
+    doty = dy + diceheight-3*dotrad;  //no change
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    dotx = dx+dicewidth-3*dotrad;
+    doty = dy+ 3*dotrad;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    ctx.closePath();
+    ctx.fill(); 
+}
+function draw2mid() {
+    var dotx;
+    var doty;
+    ctx.beginPath();
+    dotx = dx + 3*dotrad;
+    doty = dy + .5*diceheight;
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    dotx = dx+dicewidth-3*dotrad;
+    doty = dy + .5*diceheight; //no change
+    ctx.arc(dotx,doty,dotrad,0,Math.PI*2,true);
+    ctx.closePath();
+    ctx.fill();
+}
+</script>
+<p><canvas height="300" id="canvas" width="400"> Your browser doesn't support the HTML5 element canvas. </canvas> <br/> <button onclick="throwdice();">Throw dice </button></p>
+<form id="f" name="f">Stage: <input name="stage" type="text" value="First Throw"/> Point: <input name="pv" type="text" value="   "/> Outcome: <input name="outcome" type="text" value="     "/></form><h1>Game2</h1>
 <p>網路與電腦程式只是工具, 任何人希望與遠端的系統或成員溝通, 可以使用網路.</p>
 <p>任何人想要利用電腦的能力解決問題, 就必須學會編寫電腦程式, 與電腦溝通.</p>
 <p><button onclick="myFunction()">Try it</button></p>
@@ -14,10 +164,9 @@ function myFunction() {
   document.getElementById("demo").innerHTML = Math.floor(Math.random()*10);
 }
 </script><h1>week_4</h1>
-<p><span>本週課程在說明如何利用 </span><a href="https://pages.github.com/">Github Pages</a><span><span> </span>與<span> </span></span><a href="https://github.com/chiamingyen/cmsimfly">CMSimfly</a><span>, 建立個人的靜態網際內容管理系統.</span></p>
+<p><span>本週課程在說明如何利用 </span><a href="https://pages.github.com/">Github Pages</a><span><span> </span>與<span> </span></span><a href="https://github.com/chiamingyen/cmsimfly">CMSimfly</a><span>, 建立個人的靜態網際內容管理系統。</span></p>
 <p><span>進度內容及影片取自</span><a href="https://2019wcm.blogspot.com/">https://2019wcm.blogspot.com/</a><span>網際內容管理網誌。</span><br/><span>Demo 網站:<span> </span></span><a href="https://mdecourse.github.io/2019wcmj">https://mdecourse.github.io/2019wcmj</a><br/><br/><span>此處所謂的靜態網際內容管理指<span> </span></span><a href="https://pages.github.com/">Github Pages</a><span><span> </span>目前只允許伺服倉儲中特定分支的特定目錄中的超文件, 亦即<span> </span></span><a href="https://en.wikipedia.org/wiki/HTML">Html</a><span><span> </span>檔案與<span> </span></span><a href="https://en.wikipedia.org/wiki/JavaScript">Javascript</a><span><span> </span>程式檔案, 而 CMSimfly 的靜態網頁就是利用 Python 程式, 設法將原本的動態網站系統的內容轉為超文件與 Javascript 後, 單獨儲存在 content 目錄下, 然後透過倉儲根目錄中的 index.html 進行跳轉至 content/index.html, 但是 CMSimfly 倉儲中仍然保留所有動態系統的 Python 程式與設定, 可上傳至其他支援執行 Python 的網際應用伺服器 (例如:<span> </span></span><a href="https://www.heroku.com/">Heroku</a><span>), 並以動態的網站格式型態, 讓管理者登入進行內容管理.</span><br/><br/><span>之後, 我們將以 Github 倉儲中的資料版本為主, 設法在各用戶的近端可攜環境中進行版本管理, 然後再同步到<span> </span></span><a href="https://www.heroku.com/">Heroku</a><span><span> </span>動態網站, 或其他自架的網站.</span></p>
-<p><span>以下為與本週課程有關的操作說明影片.</span></p>
-<h2>建立 Github 倉儲</h2>
+<p><span>以下為與本週課程有關的操作說明影片.</span></p><h2>建立 Github 倉儲</h2>
 <p><span><iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/lPJGzHdpIOw" width="560"></iframe><span><span> </span></span></span></p>
 <h2>啟用倉儲的 Github Pages 與 CMSimfly</h2>
 <p><span><iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/RFVWE1i4Cew" width="560"></iframe></span></p>
